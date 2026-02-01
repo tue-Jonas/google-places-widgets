@@ -24,7 +24,7 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({
   const isDark = theme === 'dark';
 
   // Styles based on theme (Zinc is more neutral/less blue than Gray)
-  const bgClass = isDark ? 'bg-zinc-900 border-zinc-800' : 'bg-white border-gray-200';
+  const bgClass = isDark ? 'bg-zinc-800 border-zinc-700' : 'bg-white border-gray-200';
   const textPrimaryClass = isDark ? 'text-zinc-100' : 'text-gray-900';
   const textSecondaryClass = isDark ? 'text-zinc-400' : 'text-gray-500';
   const textContentClass = isDark ? 'text-zinc-300' : 'text-gray-700';
