@@ -18,7 +18,6 @@ export const ReviewGrid: React.FC<ReviewGridProps> = ({
   theme = 'light'
 }) => {
   const isDark = theme === 'dark';
-  const textColor = isDark ? 'text-white' : 'text-gray-900';
   
   return (
     <div className={`w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 ${isDark ? 'bg-zinc-950' : ''}`}>
