@@ -10,19 +10,20 @@ interface ReviewCardProps {
 export const ReviewCard: React.FC<ReviewCardProps> = ({ review, hideAvatar = false }) => {
   const { authorAttribution, relativePublishTimeDescription, rating, text } = review;
   const [imgError, setImgError] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   // Requirement: Truncate if > 100 chars
   const isLongText = text.length > 100;
-  const displayText = isLongText ? `${text.slice(0, 100)}...` : text;
+  const displayText = isLongText && !isExpanded ? `${text.slice(0, 100)}...` : text;
 
   // Fallback for missing photos
   const getInitials = (name: string) => {
     return name
       .split(' ')
-      .map((n) => n[0])
-      .join('')
-      .toUpperCase()
-      .slice(0, 2);
+      .filter(n => n.length > 0)
+      .map((n) => `${n[0].toUpperCase()}.`)
+      .join(' ')
+      .slice(0, 5); // Max 2 initials with dots and space (e.g. "J. D.")
   };
 
   return (
@@ -55,16 +56,15 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({ review, hideAvatar = fal
         {isLongText && (
           <span>
             {' '}
-            <a
-              href="#"
-              className="text-blue-600 hover:underline font-medium"
+            <button
+              className="text-blue-600 hover:underline font-medium bg-transparent border-none cursor-pointer p-0"
               onClick={(e) => {
                 e.preventDefault();
-                // In a real app, this would open the review on Maps
+                setIsExpanded(!isExpanded);
               }}
             >
-              Read more
-            </a>
+              {isExpanded ? 'Show less' : 'Read more'}
+            </button>
           </span>
         )}
       </div>
