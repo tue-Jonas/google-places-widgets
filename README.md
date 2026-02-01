@@ -4,11 +4,11 @@ A reusable, GDPR-compliant React library for implementing Google Places review w
 
 ## 🚀 Key Features
 
-*   **🛡️ Privacy Mode (Recommended):** One-click toggle to show initials instead of loading profile images from Google servers. This eliminates IP-leaks to Google and bypasses the need for a cookie banner in many regions (e.g., Austria).
+*   **🛡️ Privacy Mode (Recommended):** One-click toggle to show initials instead of loading profile images from Google servers. This eliminates IP-leaks to Google and bypasses the need for a cookie banner in many regions (e.g., Austria). Initials are formatted with dots and spaces (e.g., "J. D.").
 *   **Flexible Data Sources:** Fetch directly from Google Places API (New) or via a custom server-side proxy ("Clean Solution").
 *   **Smart Filtering:** Filter by minimum rating (e.g., 4+ stars), limit total reviews, or show only specific hand-picked reviews.
-*   **Responsive UI:** Beautifully crafted review cards with automatic truncation and star ratings, styled with Tailwind CSS. Supports **Dark Mode**.
-*   **TypeScript Support:** Fully typed props and API responses for a great developer experience.
+*   **Responsive UI:** Beautifully crafted review cards with star ratings and an expandable "Read more" toggle for long text. Styled with Tailwind CSS, supporting a neutral **Dark Mode** (Zinc-based).
+*   **GDPR Compliant:** The "Powered by Google" footer is always displayed to comply with Terms of Service, while avatars and full names can be hidden.
 
 ## 📦 Installation
 
@@ -38,7 +38,7 @@ function MyComponent() {
         // searchQuery: "MP Physio Langenlebarn" 
       }}
       ui={{
-        hideAvatar: true // Shows initials like "SJ" instead of Google profile pics
+        hideAvatar: true // Shows initials like "J. D." instead of Google profile pics
       }}
     />
   );
@@ -65,7 +65,7 @@ function MyComponent() {
   ui={{
     hideAvatar: false,
     authorNameDisplay: 'initials', // 'full' | 'initials' | 'hidden'
-    showGoogleLogo: true,          // Show/Hide "Powered by Google"
+    showGoogleLogo: true,          // Show extra Google verification badges
     theme: 'dark'                  // 'light' | 'dark'
   }}
 />
@@ -92,10 +92,10 @@ function MyComponent() {
 ### `ui`
 | Property | Type | Description |
 | :--- | :--- | :--- |
-| `hideAvatar` | `boolean` | **Privacy Mode:** Replaces user images with initials. |
+| `hideAvatar` | `boolean` | **Privacy Mode:** Replaces user images with initials (e.g., "J. D."). |
 | `authorNameDisplay` | `'full' \| 'initials' \| 'hidden'` | Controls how the author name is displayed. |
-| `showGoogleLogo` | `boolean` | Show or hide the "Powered by Google" footer (default: true). |
-| `theme` | `'light' \| 'dark'` | Sets the color theme (default: 'light'). |
+| `showGoogleLogo` | `boolean` | Show or hide extra Google verification badges (default: true). The mandatory footer is always visible. |
+| `theme` | `'light' \| 'dark'` | Sets the color theme (default: 'light'). Dark mode uses neutral zinc tones. |
 
 ## 📂 Project Structure
 
