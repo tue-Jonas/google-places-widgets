@@ -28,6 +28,7 @@ export const ReviewGrid: React.FC<ReviewGridProps> = ({
     setIsDragging(true);
     setStartX(e.pageX - scrollRef.current.offsetLeft);
     setScrollLeft(scrollRef.current.scrollLeft);
+    e.preventDefault(); // Prevent text selection
   };
 
   const handleMouseLeave = () => {
@@ -55,7 +56,7 @@ export const ReviewGrid: React.FC<ReviewGridProps> = ({
         onMouseLeave={handleMouseLeave}
         onMouseUp={handleMouseUp}
         onMouseMove={handleMouseMove}
-        className={`flex overflow-x-auto pb-8 gap-6 snap-x snap-mandatory scroll-smooth no-scrollbar cursor-grab ${isDragging ? 'cursor-grabbing scroll-auto' : ''}`}
+        className={`flex overflow-x-auto pb-8 gap-6 snap-x snap-mandatory scroll-smooth no-scrollbar cursor-grab ${isDragging ? 'cursor-grabbing scroll-auto select-none' : ''}`}
       >
         {reviews.map((review) => (
           <div 
