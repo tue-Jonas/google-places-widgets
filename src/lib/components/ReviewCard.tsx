@@ -6,15 +6,26 @@ interface ReviewCardProps {
   review: Review;
   hideAvatar?: boolean;
   authorNameDisplay?: 'full' | 'initials' | 'hidden';
+  theme?: 'light' | 'dark';
 }
 
 export const ReviewCard: React.FC<ReviewCardProps> = ({ 
   review, 
   hideAvatar = false, 
-  authorNameDisplay = 'full' 
+  authorNameDisplay = 'full',
+  theme = 'light'
 }) => {
   const { authorAttribution, relativePublishTimeDescription, rating, text } = review;
   const [imgError, setImgError] = useState(false);
+
+  const isDark = theme === 'dark';
+
+  // Styles based on theme
+  const bgClass = isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200';
+  const textPrimaryClass = isDark ? 'text-white' : 'text-gray-900';
+  const textSecondaryClass = isDark ? 'text-gray-400' : 'text-gray-500';
+  const textContentClass = isDark ? 'text-gray-300' : 'text-gray-700';
+  const linkClass = isDark ? 'text-blue-400 hover:text-blue-300' : 'text-blue-600 hover:underline';
 
   // Normalize text content (API returns object, mock returns string)
   const reviewContent = typeof text === 'object' && text !== null ? text.text : (text || '');
@@ -46,7 +57,7 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({
   };
 
   return (
-    <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 flex flex-col h-full hover:shadow-md transition-shadow duration-200">
+    <div className={`${bgClass} p-6 rounded-xl shadow-sm border flex flex-col h-full hover:shadow-md transition-shadow duration-200`}>
       <div className="flex items-center mb-4">
         {!hideAvatar && !imgError && authorAttribution.photoUri ? (
           <img
@@ -62,9 +73,9 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({
         )}
         <div>
           {authorNameDisplay !== 'hidden' && (
-            <h3 className="text-sm font-bold text-gray-900">{renderAuthorName()}</h3>
+            <h3 className={`text-sm font-bold ${textPrimaryClass}`}>{renderAuthorName()}</h3>
           )}
-          <p className="text-xs text-gray-500">{relativePublishTimeDescription}</p>
+          <p className={`text-xs ${textSecondaryClass}`}>{relativePublishTimeDescription}</p>
         </div>
       </div>
 
@@ -72,14 +83,14 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({
         <StarRating rating={rating} />
       </div>
 
-      <div className="text-sm text-gray-700 leading-relaxed flex-grow">
+      <div className={`text-sm ${textContentClass} leading-relaxed flex-grow`}>
         <span>{displayText}</span>
         {isLongText && (
           <span>
             {' '}
             <a
               href="#"
-              className="text-blue-600 hover:underline font-medium"
+              className={`${linkClass} font-medium`}
               onClick={(e) => {
                 e.preventDefault();
                 // In a real app, this would open the review on Maps

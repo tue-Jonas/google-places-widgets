@@ -38,6 +38,8 @@ export interface ReviewUISettings {
   hideAvatar?: boolean;
   authorNameDisplay?: 'full' | 'initials' | 'hidden'; // Replaces hideAuthorName
   showDate?: boolean;
+  showGoogleLogo?: boolean; // Show "Powered by Google" footer
+  theme?: 'light' | 'dark'; // Dark mode support
   layout?: 'grid' | 'carousel' | 'list'; // Future proofing
 }
 

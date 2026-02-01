@@ -166,6 +166,8 @@ export const GoogleReviews: React.FC<GoogleReviewsProps> = ({
         reviews={reviews} 
         hideAvatar={ui.hideAvatar} 
         authorNameDisplay={ui.authorNameDisplay}
+        showGoogleLogo={ui.showGoogleLogo}
+        theme={ui.theme}
       />
     </div>
   );
