@@ -1,18 +1,29 @@
 {
-  "name": "google-places-widgets-demo",
-  "private": true,
-  "version": "0.0.0",
+  "name": "@twb-digital/google-places-widgets",
+  "version": "0.1.0",
   "type": "module",
+  "main": "./dist/twb-google-places-widgets.umd.js",
+  "module": "./dist/twb-google-places-widgets.es.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/twb-google-places-widgets.es.js",
+      "require": "./dist/twb-google-places-widgets.umd.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
-  "dependencies": {
+  "peerDependencies": {
     "react": "^19.2.0",
-    "react-dom": "^19.2.0",
-    "react-router-dom": "^7.13.0"
+    "react-dom": "^19.2.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
@@ -30,6 +41,10 @@
     "tailwindcss": "^4.1.18",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.46.4",
-    "vite": "^7.2.4"
+    "vite": "^7.2.4",
+    "vite-plugin-dts": "^4.5.4",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-router-dom": "^7.13.0"
   }
 }

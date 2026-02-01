@@ -1,0 +1,43 @@
+export interface AuthorAttribution {
+  displayName: string;
+  photoUri: string;
+}
+
+export interface Review {
+  name: string; // Resource name
+  relativePublishTimeDescription: string;
+  rating: number; // 1-5
+  text: string; // The review content (originalText)
+  authorAttribution: AuthorAttribution;
+  publishTime?: string; // ISO date string, needed for time range filtering
+}
+
+export interface GoogleReviewsConfig {
+  apiKey?: string;
+  placeId?: string;
+  proxyUrl?: string; // Alternative to apiKey+placeId for "Clean Solution"
+  language?: string; // e.g. 'de', 'en'
+}
+
+export interface ReviewFilterSettings {
+  minRating?: number; // e.g., 4 or 5
+  maxReviews?: number; // Limit the number of reviews displayed
+  timeRange?: 'all' | 'last_month' | 'last_year';
+  specificReviewNames?: string[]; // Allowlist of specific review resource names
+  hideEmptyReviews?: boolean; // Hide reviews with no text
+}
+
+export interface ReviewUISettings {
+  hideAvatar?: boolean;
+  hideAuthorName?: boolean;
+  showDate?: boolean;
+  layout?: 'grid' | 'carousel' | 'list'; // Future proofing
+}
+
+export interface GoogleReviewsProps {
+  config: GoogleReviewsConfig;
+  filters?: ReviewFilterSettings;
+  ui?: ReviewUISettings;
+  // Fallback/Loading/Error components could be added here
+  className?: string;
+}

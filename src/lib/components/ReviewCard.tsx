@@ -5,9 +5,10 @@ import { StarRating } from './StarRating';
 interface ReviewCardProps {
   review: Review;
   hideAvatar?: boolean;
+  hideAuthorName?: boolean;
 }
 
-export const ReviewCard: React.FC<ReviewCardProps> = ({ review, hideAvatar = false }) => {
+export const ReviewCard: React.FC<ReviewCardProps> = ({ review, hideAvatar = false, hideAuthorName = false }) => {
   const { authorAttribution, relativePublishTimeDescription, rating, text } = review;
   const [imgError, setImgError] = useState(false);
 
@@ -41,7 +42,9 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({ review, hideAvatar = fal
           </div>
         )}
         <div>
-          <h3 className="text-sm font-bold text-gray-900">{authorAttribution.displayName}</h3>
+          {!hideAuthorName && (
+            <h3 className="text-sm font-bold text-gray-900">{authorAttribution.displayName}</h3>
+          )}
           <p className="text-xs text-gray-500">{relativePublishTimeDescription}</p>
         </div>
       </div>

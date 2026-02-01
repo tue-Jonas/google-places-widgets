@@ -1,75 +1,117 @@
-# Google Reviews Widget Demo
+# @twb-digital/google-places-widgets
 
-This project is a React-based component library demonstration for displaying Google Places reviews. It implements a clean, professional, and responsive "Reviews Grid" widget that complies with Google's display requirements.
+A reusable, GDPR-compliant React library for implementing Google Places review widgets on customer websites.
 
-## 🚀 Features
+## 🚀 Key Features
 
-*   **Responsive Grid Layout:** Adapts from a single column on mobile to a three-column layout on desktop.
-*   **Google Compliance:** Includes the required "Powered by Google" attribution and "Read more" links for truncated text.
-*   **Smart Truncation:** Automatically truncates reviews longer than 100 characters to maintain card height consistency.
-*   **Accessibility:** Includes accessible Star Rating components and semantic HTML.
-*   **Modern Tech Stack:** Built with React, TypeScript, Vite, and Tailwind CSS (v4).
+*   **🛡️ Privacy Mode (Recommended):** One-click toggle to show initials instead of loading profile images from Google servers. This eliminates IP-leaks to Google and bypasses the need for a cookie banner in many regions (e.g., Austria).
+*   **Flexible Data Sources:** Fetch directly from Google Places API (New) or via a custom server-side proxy ("Clean Solution").
+*   **Smart Filtering:** Filter by minimum rating (e.g., 4+ stars), limit total reviews, or show only specific hand-picked reviews.
+*   **Responsive UI:** Beautifully crafted review cards with automatic truncation and star ratings, styled with Tailwind CSS.
+*   **TypeScript Support:** Fully typed props and API responses for a great developer experience.
 
-## 🛠️ Technology Stack
+## 📦 Installation
 
-*   **Framework:** [React](https://reactjs.org/) (with Hooks)
-*   **Build Tool:** [Vite](https://vitejs.dev/)
-*   **Language:** [TypeScript](https://www.typescriptlang.org/)
-*   **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+Since this is an internal library, install it via the git repository:
+
+```bash
+npm install git+https://github.com/twb-digital/twb-google-places-widgets.git
+```
+
+## 🛠️ Usage
+
+### Basic Example (Privacy Mode)
+
+This is the recommended setup for maximum GDPR compliance:
+
+```tsx
+import { GoogleReviews } from '@twb-digital/google-places-widgets';
+
+function MyComponent() {
+  return (
+    <GoogleReviews
+      config={{
+        apiKey: "YOUR_GOOGLE_API_KEY",
+        placeId: "ChIJU35emUCdbUcRE016eJEZhzc"
+      }}
+      ui={{
+        hideAvatar: true // Shows initials like "SJ" instead of Google profile pics
+      }}
+    />
+  );
+}
+```
+
+### Advanced Filtering
+
+```tsx
+<GoogleReviews
+  config={{
+    apiKey: "YOUR_API_KEY",
+    placeId: "PLACE_ID"
+  }}
+  filters={{
+    minRating: 4.5,           // Only show 4.5 stars and above
+    maxReviews: 3,            // Limit to 3 reviews
+    hideEmptyReviews: true,   // Only show reviews with text
+    specificReviewNames: [    // Hand-pick specific reviews by ID
+      "places/PLACE_ID/reviews/REVIEW_ID_1",
+      "places/PLACE_ID/reviews/REVIEW_ID_2"
+    ]
+  }}
+  ui={{
+    hideAvatar: false,
+    hideAuthorName: false
+  }}
+/>
+```
+
+## ⚙️ Configuration (Props)
+
+### `config`
+| Property | Type | Description |
+| :--- | :--- | :--- |
+| `apiKey` | `string` | Your Google Maps API Key (Places API New must be enabled). |
+| `placeId` | `string` | The Google Place ID for the business. |
+| `proxyUrl` | `string` | (Optional) URL to your own backend proxy to avoid direct client-side calls. |
+
+### `filters`
+| Property | Type | Description |
+| :--- | :--- | :--- |
+| `minRating` | `number` | Minimum rating to display (1-5). |
+| `maxReviews` | `number` | Maximum number of reviews to show. |
+| `hideEmptyReviews`| `boolean`| If true, reviews without text content are hidden. |
+| `specificReviewNames`| `string[]`| Array of specific review resource names to display. |
+
+### `ui`
+| Property | Type | Description |
+| :--- | :--- | :--- |
+| `hideAvatar` | `boolean` | **Privacy Mode:** Replaces user images with initials. |
+| `hideAuthorName` | `boolean` | Hides the author's name. |
 
 ## 📂 Project Structure
 
-```
-src/
-├── components/
-│   ├── ReviewCard.tsx   # Individual review card component
-│   ├── ReviewGrid.tsx   # Responsive grid container
-│   └── StarRating.tsx   # Reusable SVG star rating component
-├── data/
-│   └── mockReviews.ts   # Mock data simulating Google Places API response
-├── types/
-│   └── index.ts         # TypeScript definitions for Review objects
-└── App.tsx              # Main entry point with loading state simulation
-```
+*   `src/lib/`: The core library source code.
+*   `src/lib/GoogleReviews.tsx`: The main entry component.
+*   `src/pages/Home.tsx`: Demo page for testing the library locally.
+*   `dist/`: Build artifacts (ESM, UMD, and Type definitions).
 
-## 🏁 Getting Started
-
-Follow these steps to run the project locally.
-
-### Prerequisites
-
-*   Node.js (v18 or higher recommended)
-*   npm (v9 or higher)
-
-### Installation
-
-1.  **Install dependencies:**
-    ```bash
-    npm install
-    ```
-
-2.  **Start the development server:**
-    ```bash
-    npm run dev
-    ```
-
-3.  **Open in your browser:**
-    Navigate to the URL shown in your terminal (usually `http://localhost:5173`).
-
-### Building for Production
-
-To create a production-ready build:
+## 🛠️ Development & Build
 
 ```bash
+# Start the demo app locally
+npm run dev
+
+# Build the library for distribution
 npm run build
+
+# Lint the codebase
+npm run lint
 ```
 
-The output will be in the `dist/` directory.
+## ⚖️ GDPR Note
 
-## 🧪 Testing
-
-The project uses mock data located in `src/data/mockReviews.ts` to simulate API responses. You can modify this file to test different review lengths, ratings, or user scenarios.
+Using `ui.hideAvatar: true` is highly recommended for Austrian/EU clients. By not loading profile images from Google servers, the visitor's IP address is not transmitted to Google, often allowing you to display reviews without a prior cookie consent banner (under "Legitimate Interest").
 
 ---
-
-**Note:** This is a demo application using static mock data. In a real-world scenario, you would replace the mock data fetch in `App.tsx` with a call to your backend service that proxies the Google Places API.
+© 2026 TWB-Digital OG
