@@ -7,7 +7,7 @@ A reusable, GDPR-compliant React library for implementing Google Places review w
 *   **🛡️ Privacy Mode (Recommended):** One-click toggle to show initials instead of loading profile images from Google servers. This eliminates IP-leaks to Google and bypasses the need for a cookie banner in many regions (e.g., Austria).
 *   **Flexible Data Sources:** Fetch directly from Google Places API (New) or via a custom server-side proxy ("Clean Solution").
 *   **Smart Filtering:** Filter by minimum rating (e.g., 4+ stars), limit total reviews, or show only specific hand-picked reviews.
-*   **Responsive UI:** Beautifully crafted review cards with automatic truncation and star ratings, styled with Tailwind CSS.
+*   **Responsive UI:** Beautifully crafted review cards with automatic truncation and star ratings, styled with Tailwind CSS. Supports **Dark Mode**.
 *   **TypeScript Support:** Fully typed props and API responses for a great developer experience.
 
 ## 📦 Installation
@@ -45,7 +45,7 @@ function MyComponent() {
 }
 ```
 
-### Advanced Filtering
+### Advanced Filtering & Customization
 
 ```tsx
 <GoogleReviews
@@ -64,7 +64,9 @@ function MyComponent() {
   }}
   ui={{
     hideAvatar: false,
-    hideAuthorName: false
+    authorNameDisplay: 'initials', // 'full' | 'initials' | 'hidden'
+    showGoogleLogo: true,          // Show/Hide "Powered by Google"
+    theme: 'dark'                  // 'light' | 'dark'
   }}
 />
 ```
@@ -91,7 +93,9 @@ function MyComponent() {
 | Property | Type | Description |
 | :--- | :--- | :--- |
 | `hideAvatar` | `boolean` | **Privacy Mode:** Replaces user images with initials. |
-| `hideAuthorName` | `boolean` | Hides the author's name. |
+| `authorNameDisplay` | `'full' \| 'initials' \| 'hidden'` | Controls how the author name is displayed. |
+| `showGoogleLogo` | `boolean` | Show or hide the "Powered by Google" footer (default: true). |
+| `theme` | `'light' \| 'dark'` | Sets the color theme (default: 'light'). |
 
 ## 📂 Project Structure
 
