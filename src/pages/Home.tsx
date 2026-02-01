@@ -15,7 +15,7 @@ export const Home = () => {
 
   // UI State
   const [hideAvatar, setHideAvatar] = useState(false);
-  const [hideAuthorName, setHideAuthorName] = useState(false);
+  const [authorNameDisplay, setAuthorNameDisplay] = useState<'full' | 'initials' | 'hidden'>('full');
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -100,15 +100,21 @@ export const Home = () => {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700">Max Reviews</label>
+              <label className="block text-sm font-medium text-gray-700">
+                Max Reviews: {maxReviews}
+              </label>
               <input
-                type="number"
+                type="range"
                 min="1"
-                max="20"
+                max="5"
+                step="1"
                 value={maxReviews}
                 onChange={(e) => setMaxReviews(parseInt(e.target.value))}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border"
+                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
               />
+              <p className="text-xs text-gray-500 mt-1">
+                Note: Standard Google Places API returns max 5 reviews.
+              </p>
             </div>
             <div className="flex items-center">
               <input
@@ -151,26 +157,17 @@ export const Home = () => {
               </button>
             </div>
 
-            <div className="flex items-center justify-between">
-              <span className="flex-grow flex flex-col">
-                <span className="text-sm font-medium text-gray-900">Anonymize Name</span>
-                <span className="text-xs text-gray-500">Hide Author Name</span>
-              </span>
-              <button
-                role="switch"
-                aria-checked={hideAuthorName}
-                onClick={() => setHideAuthorName(!hideAuthorName)}
-                className={`${
-                  hideAuthorName ? 'bg-blue-600' : 'bg-gray-200'
-                } relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2`}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Author Name Display</label>
+              <select
+                value={authorNameDisplay}
+                onChange={(e) => setAuthorNameDisplay(e.target.value as any)}
+                className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border"
               >
-                <span
-                  aria-hidden="true"
-                  className={`${
-                    hideAuthorName ? 'translate-x-5' : 'translate-x-0'
-                  } pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out`}
-                />
-              </button>
+                <option value="full">Full Name (e.g. John Doe)</option>
+                <option value="initials">Initials Only (e.g. J.D.)</option>
+                <option value="hidden">Hidden</option>
+              </select>
             </div>
           </div>
         </div>
@@ -192,7 +189,7 @@ export const Home = () => {
           }}
           ui={{
             hideAvatar,
-            hideAuthorName
+            authorNameDisplay
           }}
         />
       </div>

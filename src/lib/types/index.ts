@@ -36,7 +36,7 @@ export interface ReviewFilterSettings {
 
 export interface ReviewUISettings {
   hideAvatar?: boolean;
-  hideAuthorName?: boolean;
+  authorNameDisplay?: 'full' | 'initials' | 'hidden'; // Replaces hideAuthorName
   showDate?: boolean;
   layout?: 'grid' | 'carousel' | 'list'; // Future proofing
 }

@@ -5,10 +5,14 @@ import { StarRating } from './StarRating';
 interface ReviewCardProps {
   review: Review;
   hideAvatar?: boolean;
-  hideAuthorName?: boolean;
+  authorNameDisplay?: 'full' | 'initials' | 'hidden';
 }
 
-export const ReviewCard: React.FC<ReviewCardProps> = ({ review, hideAvatar = false, hideAuthorName = false }) => {
+export const ReviewCard: React.FC<ReviewCardProps> = ({ 
+  review, 
+  hideAvatar = false, 
+  authorNameDisplay = 'full' 
+}) => {
   const { authorAttribution, relativePublishTimeDescription, rating, text } = review;
   const [imgError, setImgError] = useState(false);
 
@@ -19,7 +23,7 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({ review, hideAvatar = fal
   const isLongText = reviewContent.length > 100;
   const displayText = isLongText ? `${reviewContent.slice(0, 100)}...` : reviewContent;
 
-  // Fallback for missing photos
+  // Helper for initials
   const getInitials = (name: string) => {
     return name
       .split(' ')
@@ -27,6 +31,18 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({ review, hideAvatar = fal
       .join('')
       .toUpperCase()
       .slice(0, 2);
+  };
+
+  const renderAuthorName = () => {
+    switch (authorNameDisplay) {
+      case 'hidden':
+        return null;
+      case 'initials':
+        return getInitials(authorAttribution.displayName);
+      case 'full':
+      default:
+        return authorAttribution.displayName;
+    }
   };
 
   return (
@@ -45,8 +61,8 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({ review, hideAvatar = fal
           </div>
         )}
         <div>
-          {!hideAuthorName && (
-            <h3 className="text-sm font-bold text-gray-900">{authorAttribution.displayName}</h3>
+          {authorNameDisplay !== 'hidden' && (
+            <h3 className="text-sm font-bold text-gray-900">{renderAuthorName()}</h3>
           )}
           <p className="text-xs text-gray-500">{relativePublishTimeDescription}</p>
         </div>

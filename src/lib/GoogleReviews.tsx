@@ -70,6 +70,7 @@ export const GoogleReviews: React.FC<GoogleReviewsProps> = ({
           // Step 2b: Fetch Reviews using the Place ID
           // https://places.googleapis.com/v1/places/{placeId}?fields=reviews&key={apiKey}
           const baseUrl = 'https://places.googleapis.com/v1/places';
+          // Note: 'reviews' field in Places API (New) returns max 5 reviews.
           const fields = 'reviews,displayName'; 
           const url = `${baseUrl}/${targetPlaceId}?fields=${fields}&key=${config.apiKey}`;
           
@@ -77,6 +78,10 @@ export const GoogleReviews: React.FC<GoogleReviewsProps> = ({
           if (!response.ok) throw new Error('Failed to fetch from Google Places API');
           const data = await response.json();
           fetchedReviews = data.reviews || [];
+
+          if (filters.maxReviews && filters.maxReviews > 5) {
+            console.warn('Google Places API (Standard) limits results to 5 reviews per request.');
+          }
         } else {
           // Mode 3: Fallback / Demo Mode (Mock Data)
           // console.warn('GoogleReviews: No API config provided, using mock data.');
@@ -160,7 +165,7 @@ export const GoogleReviews: React.FC<GoogleReviewsProps> = ({
       <ReviewGrid 
         reviews={reviews} 
         hideAvatar={ui.hideAvatar} 
-        hideAuthorName={ui.hideAuthorName}
+        authorNameDisplay={ui.authorNameDisplay}
       />
     </div>
   );
