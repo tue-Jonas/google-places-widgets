@@ -16,8 +16,8 @@ export default defineConfig({
     copyPublicDir: false, // Don't copy public assets for library build
     lib: {
       entry: resolve(__dirname, 'src/lib/index.ts'),
-      name: 'TwbGooglePlacesWidgets',
-      fileName: (format) => `twb-google-places-widgets.${format}.js`,
+      name: 'GooglePlacesWidgets',
+      fileName: (format) => `google-places-widgets.${format}.js`,
     },
     rollupOptions: {
       // Make sure to externalize deps that shouldn't be bundled

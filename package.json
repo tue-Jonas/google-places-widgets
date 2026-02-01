@@ -2,14 +2,14 @@
   "name": "@twb-digital/google-places-widgets",
   "version": "0.1.0",
   "type": "module",
-  "main": "./dist/twb-google-places-widgets.umd.js",
-  "module": "./dist/twb-google-places-widgets.es.js",
+  "main": "./dist/google-places-widgets.umd.js",
+  "module": "./dist/google-places-widgets.es.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/twb-google-places-widgets.es.js",
-      "require": "./dist/twb-google-places-widgets.umd.js"
+      "import": "./dist/google-places-widgets.es.js",
+      "require": "./dist/google-places-widgets.umd.js"
     }
   },
   "files": [
