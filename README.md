@@ -15,7 +15,7 @@ A reusable, GDPR-compliant React library for implementing Google Places review w
 Since this is an internal library, install it via the git repository:
 
 ```bash
-npm install git+https://github.com/twb-digital/twb-google-places-widgets.git
+npm install git+https://github.com/tue-Jonas/google-places-widgets.git
 ```
 
 ## 🛠️ Usage
@@ -25,7 +25,7 @@ npm install git+https://github.com/twb-digital/twb-google-places-widgets.git
 This is the recommended setup for maximum GDPR compliance:
 
 ```tsx
-import { GoogleReviews } from '@twb-digital/google-places-widgets';
+import { GoogleReviews } from '@tue-jonas/google-places-widgets';
 
 function MyComponent() {
   return (
