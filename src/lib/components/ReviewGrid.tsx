@@ -21,17 +21,21 @@ export const ReviewGrid: React.FC<ReviewGridProps> = ({
   
   return (
     <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      {/* Responsive Grid: 1 col mobile, 3 cols desktop (lg) */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {/* Running Wall: Horizontal scroll with snap points */}
+      <div className="flex overflow-x-auto pb-8 gap-6 snap-x snap-mandatory scroll-smooth -mx-4 px-4 sm:mx-0 sm:px-0 no-scrollbar">
         {reviews.map((review) => (
-          <ReviewCard 
+          <div 
             key={review.name} 
-            review={review} 
-            hideAvatar={hideAvatar}
-            authorNameDisplay={authorNameDisplay}
-            theme={theme}
-            showGoogleLogo={showGoogleLogo}
-          />
+            className="flex-shrink-0 w-[85vw] sm:w-[400px] snap-start"
+          >
+            <ReviewCard 
+              review={review} 
+              hideAvatar={hideAvatar}
+              authorNameDisplay={authorNameDisplay}
+              theme={theme}
+              showGoogleLogo={showGoogleLogo}
+            />
+          </div>
         ))}
       </div>
 
