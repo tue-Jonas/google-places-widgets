@@ -8,6 +8,8 @@ interface ReviewGridProps {
   authorNameDisplay?: 'full' | 'initials' | 'hidden';
   showGoogleLogo?: boolean;
   theme?: 'light' | 'dark';
+  autoScroll?: boolean;
+  autoScrollSpeed?: number;
 }
 
 export const ReviewGrid: React.FC<ReviewGridProps> = ({ 
@@ -15,13 +17,43 @@ export const ReviewGrid: React.FC<ReviewGridProps> = ({
   hideAvatar, 
   authorNameDisplay,
   showGoogleLogo = true,
-  theme = 'light'
+  theme = 'light',
+  autoScroll = true,
+  autoScrollSpeed = 0.5
 }) => {
   const isDark = theme === 'dark';
   const scrollRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
+
+  // Auto-scroll logic
+  useEffect(() => {
+    if (!autoScroll || isDragging || isHovered) return;
+
+    let animationFrameId: number;
+    const scrollContainer = scrollRef.current;
+
+    const performScroll = () => {
+      if (scrollContainer) {
+        // Only scroll if content overflows
+        if (scrollContainer.scrollWidth > scrollContainer.clientWidth) {
+          scrollContainer.scrollLeft += autoScrollSpeed;
+
+          // Reset to beginning if reached the end
+          if (scrollContainer.scrollLeft >= scrollContainer.scrollWidth - scrollContainer.clientWidth) {
+            scrollContainer.scrollLeft = 0;
+          }
+        }
+      }
+      animationFrameId = requestAnimationFrame(performScroll);
+    };
+
+    animationFrameId = requestAnimationFrame(performScroll);
+
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [autoScroll, autoScrollSpeed, isDragging, isHovered]);
 
   const handleMouseDown = (e: React.MouseEvent) => {
     if (!scrollRef.current) return;
@@ -33,6 +65,7 @@ export const ReviewGrid: React.FC<ReviewGridProps> = ({
 
   const handleMouseLeave = () => {
     setIsDragging(false);
+    setIsHovered(false);
   };
 
   const handleMouseUp = () => {
@@ -40,11 +73,12 @@ export const ReviewGrid: React.FC<ReviewGridProps> = ({
   };
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging || !scrollRef.current) return;
-    e.preventDefault();
-    const x = e.pageX - scrollRef.current.offsetLeft;
-    const walk = (x - startX) * 2; // Scroll speed
-    scrollRef.current.scrollLeft = scrollLeft - walk;
+    if (isDragging && scrollRef.current) {
+      e.preventDefault();
+      const x = e.pageX - scrollRef.current.offsetLeft;
+      const walk = (x - startX) * 2; // Scroll speed
+      scrollRef.current.scrollLeft = scrollLeft - walk;
+    }
   };
   
   return (
@@ -53,10 +87,11 @@ export const ReviewGrid: React.FC<ReviewGridProps> = ({
       <div 
         ref={scrollRef}
         onMouseDown={handleMouseDown}
+        onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={handleMouseLeave}
         onMouseUp={handleMouseUp}
         onMouseMove={handleMouseMove}
-        className={`flex overflow-x-auto pb-8 gap-6 snap-x snap-mandatory scroll-smooth no-scrollbar cursor-grab ${isDragging ? 'cursor-grabbing scroll-auto select-none' : ''}`}
+        className={`flex overflow-x-auto pb-8 gap-6 snap-x snap-mandatory no-scrollbar cursor-grab ${isDragging ? 'cursor-grabbing select-none' : ''} ${autoScroll && !isDragging && !isHovered ? 'scroll-auto' : 'scroll-smooth'}`}
       >
         {reviews.map((review) => (
           <div 

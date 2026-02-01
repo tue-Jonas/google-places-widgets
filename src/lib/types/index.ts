@@ -41,6 +41,8 @@ export interface ReviewUISettings {
   showGoogleLogo?: boolean; // Show "Powered by Google" footer
   theme?: 'light' | 'dark'; // Dark mode support
   layout?: 'grid' | 'carousel' | 'list'; // Future proofing
+  autoScroll?: boolean; // Enable automatic scrolling
+  autoScrollSpeed?: number; // Pixels per frame (default: 0.5)
 }
 
 export interface GoogleReviewsProps {

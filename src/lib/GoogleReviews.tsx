@@ -168,6 +168,8 @@ export const GoogleReviews: React.FC<GoogleReviewsProps> = ({
         authorNameDisplay={ui.authorNameDisplay}
         showGoogleLogo={ui.showGoogleLogo}
         theme={ui.theme}
+        autoScroll={ui.autoScroll}
+        autoScrollSpeed={ui.autoScrollSpeed}
       />
     </div>
   );

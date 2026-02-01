@@ -18,6 +18,8 @@ export const Home = () => {
   const [authorNameDisplay, setAuthorNameDisplay] = useState<'full' | 'initials' | 'hidden'>('full');
   const [showGoogleLogo, setShowGoogleLogo] = useState(true);
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [autoScroll, setAutoScroll] = useState(true);
+  const [autoScrollSpeed, setAutoScrollSpeed] = useState(0.5);
 
   return (
     <div className={`min-h-screen ${theme === 'dark' ? 'bg-zinc-900' : 'bg-gray-50'}`}>
@@ -224,6 +226,54 @@ export const Home = () => {
 
             </div>
           </div>
+
+          {/* Row 4: Motion & Layout */}
+          <div className="space-y-4">
+            <h3 className={`text-lg font-medium border-b pb-2 ${theme === 'dark' ? 'text-white border-zinc-700' : 'text-gray-900 border-gray-200'}`}>4. Motion & Layout</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              
+              {/* Auto Scroll Toggle */}
+              <div className="flex items-center justify-between">
+                <span className="flex-grow flex flex-col">
+                  <span className={`text-sm font-medium ${theme === 'dark' ? 'text-zinc-300' : 'text-gray-900'}`}>Auto Scroll</span>
+                  <span className="text-xs text-gray-500">Enable marquee effect</span>
+                </span>
+                <button
+                  role="switch"
+                  aria-checked={autoScroll}
+                  onClick={() => setAutoScroll(!autoScroll)}
+                  className={`${
+                    autoScroll ? 'bg-blue-600' : 'bg-gray-200'
+                  } relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2`}
+                >
+                  <span
+                    aria-hidden="true"
+                    className={`${
+                      autoScroll ? 'translate-x-5' : 'translate-x-0'
+                    } pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out`}
+                  />
+                </button>
+              </div>
+
+              {/* Scroll Speed */}
+              <div className="col-span-1 md:col-span-2">
+                <label className={`block text-sm font-medium ${theme === 'dark' ? 'text-zinc-300' : 'text-gray-700'}`}>
+                  Scroll Speed: {autoScrollSpeed.toFixed(1)} px/f
+                </label>
+                <input
+                  type="range"
+                  min="0.1"
+                  max="5"
+                  step="0.1"
+                  value={autoScrollSpeed}
+                  onChange={(e) => setAutoScrollSpeed(parseFloat(e.target.value))}
+                  disabled={!autoScroll}
+                  className={`w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer ${!autoScroll ? 'opacity-50 cursor-not-allowed' : ''}`}
+                />
+              </div>
+
+            </div>
+          </div>
         </div>
 
         <div className={`border-t pt-8 ${theme === 'dark' ? 'border-zinc-700' : 'border-gray-200'}`}>
@@ -244,7 +294,9 @@ export const Home = () => {
               hideAvatar,
               authorNameDisplay,
               showGoogleLogo,
-              theme
+              theme,
+              autoScroll,
+              autoScrollSpeed
             }}
           />
         </div>
