@@ -1,4 +1,4 @@
-# @twb-digital/google-places-widgets
+# @tue-jonas/google-places-widgets
 
 A reusable, GDPR-compliant React library for implementing Google Places review widgets on customer websites.
 

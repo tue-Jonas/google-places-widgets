@@ -1,5 +1,5 @@
 {
-  "name": "@twb-digital/google-places-widgets",
+  "name": "@tue-jonas/google-places-widgets",
   "version": "0.1.0",
   "type": "module",
   "main": "./dist/google-places-widgets.umd.js",
