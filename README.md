@@ -32,7 +32,10 @@ function MyComponent() {
     <GoogleReviews
       config={{
         apiKey: "YOUR_GOOGLE_API_KEY",
-        placeId: "ChIJU35emUCdbUcRE016eJEZhzc"
+        // Option A: Use Place ID (Fastest)
+        placeId: "ChIJU35emUCdbUcRE016eJEZhzc",
+        // Option B: OR use a Search Query (Easiest)
+        // searchQuery: "MP Physio Langenlebarn" 
       }}
       ui={{
         hideAvatar: true // Shows initials like "SJ" instead of Google profile pics
@@ -48,7 +51,7 @@ function MyComponent() {
 <GoogleReviews
   config={{
     apiKey: "YOUR_API_KEY",
-    placeId: "PLACE_ID"
+    searchQuery: "MP Physio Langenlebarn" // Auto-finds the Place ID
   }}
   filters={{
     minRating: 4.5,           // Only show 4.5 stars and above
@@ -72,7 +75,8 @@ function MyComponent() {
 | Property | Type | Description |
 | :--- | :--- | :--- |
 | `apiKey` | `string` | Your Google Maps API Key (Places API New must be enabled). |
-| `placeId` | `string` | The Google Place ID for the business. |
+| `placeId` | `string` | The Google Place ID. **Required** unless `searchQuery` or `proxyUrl` is used. |
+| `searchQuery`| `string` | **New:** Search for a place by name/address (e.g. "MP Physio"). The widget will resolve the ID automatically. |
 | `proxyUrl` | `string` | (Optional) URL to your own backend proxy to avoid direct client-side calls. |
 
 ### `filters`
