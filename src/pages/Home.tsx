@@ -5,6 +5,7 @@ export const Home = () => {
   // Config State
   const [apiKey, setApiKey] = useState('');
   const [placeId, setPlaceId] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
   const [proxyUrl, setProxyUrl] = useState('');
 
   // Filter State
@@ -30,44 +31,60 @@ export const Home = () => {
       <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200 mb-8 space-y-6">
         
         {/* Row 1: Connection Settings */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="space-y-4">
-            <h3 className="text-lg font-medium text-gray-900 border-b pb-2">1. Connection</h3>
-            <div>
-              <label className="block text-sm font-medium text-gray-700">Google API Key</label>
-              <input
-                type="text"
-                value={apiKey}
-                onChange={(e) => setApiKey(e.target.value)}
-                placeholder="AIzaSy..."
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700">Place ID</label>
-              <input
-                type="text"
-                value={placeId}
-                onChange={(e) => setPlaceId(e.target.value)}
-                placeholder="ChIJ..."
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700">Proxy URL (Optional)</label>
-              <input
-                type="text"
-                value={proxyUrl}
-                onChange={(e) => setProxyUrl(e.target.value)}
-                placeholder="https://api.example.com/reviews"
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border"
-              />
-            </div>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div className="space-y-4 col-span-1 md:col-span-4 border-b pb-4 mb-4">
+            <h3 className="text-lg font-medium text-gray-900">1. Connection</h3>
+            <p className="text-sm text-gray-500">
+              Provide your API Key. Then, enter EITHER a <strong>Place ID</strong> OR a <strong>Search Query</strong> (Name/Address).
+            </p>
           </div>
 
-          {/* Row 2: Filters */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-medium text-gray-900 border-b pb-2">2. Filters</h3>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Google API Key</label>
+            <input
+              type="text"
+              value={apiKey}
+              onChange={(e) => setApiKey(e.target.value)}
+              placeholder="AIzaSy..."
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Place ID</label>
+            <input
+              type="text"
+              value={placeId}
+              onChange={(e) => setPlaceId(e.target.value)}
+              placeholder="ChIJ..."
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border"
+            />
+          </div>
+           <div>
+            <label className="block text-sm font-medium text-gray-700">OR Search (Name/Address)</label>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="e.g. MP Physio Langenlebarn"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Proxy URL (Optional)</label>
+            <input
+              type="text"
+              value={proxyUrl}
+              onChange={(e) => setProxyUrl(e.target.value)}
+              placeholder="https://api.example.com/reviews"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border"
+            />
+          </div>
+        </div>
+
+        {/* Row 2: Filters */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-medium text-gray-900 border-b pb-2">2. Filters</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div>
               <label className="block text-sm font-medium text-gray-700">
                 Min Rating: {minRating} Stars
@@ -102,15 +119,16 @@ export const Home = () => {
                 className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
               />
               <label htmlFor="hide-empty" className="ml-2 block text-sm text-gray-900">
-                Hide Empty Reviews (Text only)
+                Hide Empty Reviews
               </label>
             </div>
           </div>
+        </div>
 
-          {/* Row 3: UI Settings */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-medium text-gray-900 border-b pb-2">3. UI & Privacy</h3>
-            
+        {/* Row 3: UI Settings */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-medium text-gray-900 border-b pb-2">3. UI & Privacy</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="flex items-center justify-between">
               <span className="flex-grow flex flex-col">
                 <span className="text-sm font-medium text-gray-900">Privacy Mode</span>
@@ -154,7 +172,6 @@ export const Home = () => {
                 />
               </button>
             </div>
-
           </div>
         </div>
       </div>
@@ -165,6 +182,7 @@ export const Home = () => {
           config={{
             apiKey: apiKey || undefined,
             placeId: placeId || undefined,
+            searchQuery: searchQuery || undefined,
             proxyUrl: proxyUrl || undefined
           }}
           filters={{

@@ -15,6 +15,7 @@ export interface Review {
 export interface GoogleReviewsConfig {
   apiKey?: string;
   placeId?: string;
+  searchQuery?: string; // e.g. "MP Physio Langenlebarn" - Used to find Place ID if placeId is missing
   proxyUrl?: string; // Alternative to apiKey+placeId for "Clean Solution"
   language?: string; // e.g. 'de', 'en'
 }

@@ -29,13 +29,49 @@ export const GoogleReviews: React.FC<GoogleReviewsProps> = ({
           if (!response.ok) throw new Error('Failed to fetch from proxy');
           const data = await response.json();
           fetchedReviews = data.reviews || [];
-        } else if (config.apiKey && config.placeId) {
+        } else if (config.apiKey) {
           // Mode 2: Direct Google API call (Standard Solution)
-          // Note: In a real production lib, you'd likely use the Places API (New) endpoint
+          
+          let targetPlaceId = config.placeId;
+
+          // Step 2a: Resolve Place ID from Search Query if needed
+          if (!targetPlaceId && config.searchQuery) {
+            const searchUrl = 'https://places.googleapis.com/v1/places:searchText';
+            const searchResponse = await fetch(searchUrl, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'X-Goog-Api-Key': config.apiKey,
+                'X-Goog-FieldMask': 'places.id',
+              },
+              body: JSON.stringify({
+                textQuery: config.searchQuery,
+              }),
+            });
+
+            if (!searchResponse.ok) throw new Error('Failed to search for place');
+            const searchData = await searchResponse.json();
+            
+            if (searchData.places && searchData.places.length > 0) {
+              targetPlaceId = searchData.places[0].id;
+            } else {
+              throw new Error(`No place found for query: "${config.searchQuery}"`);
+            }
+          }
+
+          if (!targetPlaceId) {
+             // Fallback to mock if no ID and no query provided, or if we want to allow 
+             // the "mock mode" to trigger when keys are missing.
+             // But here we are inside the (config.apiKey) block, so we expect to do real work.
+             // If we failed to get an ID, we should error.
+             throw new Error('No Place ID provided and Search Query failed.');
+          }
+
+          // Step 2b: Fetch Reviews using the Place ID
           // https://places.googleapis.com/v1/places/{placeId}?fields=reviews&key={apiKey}
           const baseUrl = 'https://places.googleapis.com/v1/places';
           const fields = 'reviews,displayName'; 
-          const url = `${baseUrl}/${config.placeId}?fields=${fields}&key=${config.apiKey}`;
+          const url = `${baseUrl}/${targetPlaceId}?fields=${fields}&key=${config.apiKey}`;
           
           const response = await fetch(url);
           if (!response.ok) throw new Error('Failed to fetch from Google Places API');
@@ -89,7 +125,7 @@ export const GoogleReviews: React.FC<GoogleReviewsProps> = ({
     };
 
     fetchReviews();
-  }, [config.apiKey, config.placeId, config.proxyUrl, JSON.stringify(filters)]);
+  }, [config.apiKey, config.placeId, config.searchQuery, config.proxyUrl, JSON.stringify(filters)]);
 
   if (loading) {
     return (
