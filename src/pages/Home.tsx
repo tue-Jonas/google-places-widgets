@@ -275,9 +275,11 @@ export const Home = () => {
             </div>
           </div>
         </div>
+      </div>
 
-        <div className={`border-t pt-8 ${theme === 'dark' ? 'border-zinc-700' : 'border-gray-200'}`}>
-          <h2 className={`text-2xl font-bold mb-6 text-center ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>Live Preview</h2>
+      <div className={`border-t pt-8 pb-12 ${theme === 'dark' ? 'border-zinc-700' : 'border-gray-200'}`}>
+        <h2 className={`text-2xl font-bold mb-6 text-center ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>Live Preview</h2>
+        <div className="w-full">
           <GoogleReviews 
             config={{
               apiKey: apiKey || undefined,

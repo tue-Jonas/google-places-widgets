@@ -82,7 +82,7 @@ export const ReviewGrid: React.FC<ReviewGridProps> = ({
   };
   
   return (
-    <div className="w-full mx-auto py-8">
+    <div className="w-full py-8">
       {/* Running Wall: Horizontal scroll with snap points */}
       <div 
         ref={scrollRef}
@@ -91,7 +91,7 @@ export const ReviewGrid: React.FC<ReviewGridProps> = ({
         onMouseLeave={handleMouseLeave}
         onMouseUp={handleMouseUp}
         onMouseMove={handleMouseMove}
-        className={`flex overflow-x-auto pb-8 gap-6 snap-x snap-mandatory no-scrollbar cursor-grab ${isDragging ? 'cursor-grabbing select-none' : ''} ${autoScroll && !isDragging && !isHovered ? 'scroll-auto' : 'scroll-smooth'}`}
+        className={`flex overflow-x-auto pb-8 gap-6 snap-x snap-mandatory no-scrollbar cursor-grab px-4 sm:px-8 ${isDragging ? 'cursor-grabbing select-none' : ''} ${autoScroll && !isDragging && !isHovered ? 'scroll-auto' : 'scroll-smooth'}`}
       >
         {reviews.map((review) => (
           <div 
@@ -110,7 +110,7 @@ export const ReviewGrid: React.FC<ReviewGridProps> = ({
       </div>
 
       {/* Powered by Google Footer - Always Visible */}
-      <div className="flex justify-end mt-6">
+      <div className="flex justify-end mt-6 px-4 sm:px-8">
         <div className="flex items-center space-x-2 opacity-60 grayscale hover:grayscale-0 transition-all">
           <span className={`text-xs font-medium ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Powered by</span>
           <span className={`text-sm font-bold ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>Google</span>
