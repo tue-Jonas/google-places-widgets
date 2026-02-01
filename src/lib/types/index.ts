@@ -3,11 +3,17 @@ export interface AuthorAttribution {
   photoUri: string;
 }
 
+export interface LocalizedText {
+  text: string;
+  languageCode: string;
+}
+
 export interface Review {
   name: string; // Resource name
   relativePublishTimeDescription: string;
   rating: number; // 1-5
-  text: string; // The review content (originalText)
+  text: string | LocalizedText; // The review content
+  originalText?: LocalizedText; // API sometimes returns this
   authorAttribution: AuthorAttribution;
   publishTime?: string; // ISO date string, needed for time range filtering
 }

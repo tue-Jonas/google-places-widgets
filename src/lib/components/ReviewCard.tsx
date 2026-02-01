@@ -12,9 +12,12 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({ review, hideAvatar = fal
   const { authorAttribution, relativePublishTimeDescription, rating, text } = review;
   const [imgError, setImgError] = useState(false);
 
+  // Normalize text content (API returns object, mock returns string)
+  const reviewContent = typeof text === 'object' && text !== null ? text.text : (text || '');
+
   // Requirement: Truncate if > 100 chars
-  const isLongText = text.length > 100;
-  const displayText = isLongText ? `${text.slice(0, 100)}...` : text;
+  const isLongText = reviewContent.length > 100;
+  const displayText = isLongText ? `${reviewContent.slice(0, 100)}...` : reviewContent;
 
   // Fallback for missing photos
   const getInitials = (name: string) => {

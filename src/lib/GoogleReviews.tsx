@@ -95,7 +95,10 @@ export const GoogleReviews: React.FC<GoogleReviewsProps> = ({
 
         // 2. Filter Empty Reviews (Text only)
         if (filters.hideEmptyReviews) {
-          processedReviews = processedReviews.filter(r => r.text && r.text.trim().length > 0);
+          processedReviews = processedReviews.filter(r => {
+            const textContent = typeof r.text === 'object' && r.text !== null ? r.text.text : r.text;
+            return textContent && textContent.trim().length > 0;
+          });
         }
 
         // 3. Filter Specific Reviews (Allowlist)
