@@ -117,9 +117,36 @@ npm run build
 npm run lint
 ```
 
-## ⚖️ GDPR Note
-
-Using `ui.hideAvatar: true` is highly recommended for Austrian/EU clients. By not loading profile images from Google servers, the visitor's IP address is not transmitted to Google, often allowing you to display reviews without a prior cookie consent banner (under "Legitimate Interest").
+## 🔒 Security & Backend Proxy (Recommended)
+ 
+ **Do not use your API Key directly in the frontend (`apiKey` prop) on production websites.** This exposes your key to the public, allowing potential abuse of your quota.
+ 
+ ### The Secure "Clean" Solution
+ 
+ Instead, use a backend script (e.g., PHP) to fetch and cache the data. This hides your key and reduces costs by caching responses.
+ 
+ #### 1. Deploy the Proxy Script
+ We provide a ready-to-use PHP script for standard web hosting (e.g., World4You, All-Inkl):
+ 
+ 1.  Copy `examples/proxy/google-places-proxy.php` to your web server (e.g., `https://your-website.com/api/reviews.php`).
+ 2.  Edit the file to set your `GOOGLE_API_KEY` and `DEFAULT_PLACE_ID`.
+ 3.  Ensure the script can write to a `cache/` directory.
+ 
+ #### 2. Configure the Widget
+ 
+ ```tsx
+ <GoogleReviews
+   config={{
+     // No apiKey needed here!
+     proxyUrl: "https://your-website.com/api/reviews.php"
+   }}
+   // ... other props
+ />
+ ```
+ 
+ ## ⚖️ GDPR Note
+ 
+ Using `ui.hideAvatar: true` is highly recommended for Austrian/EU clients. By not loading profile images from Google servers, the visitor's IP address is not transmitted to Google, often allowing you to display reviews without a prior cookie consent banner (under "Legitimate Interest").
 
 ---
 © 2026 TWB-Digital OG
