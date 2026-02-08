@@ -110,7 +110,7 @@ export const ReviewGrid: React.FC<ReviewGridProps> = ({
       </div>
 
       {/* Powered by Google Footer - Always Visible */}
-      <div className="flex justify-end mt-6 px-4 sm:px-8">
+      <div className="flex justify-end mt-6 pl-4 pr-0 sm:pl-8 sm:pr-0">
         <div className="flex items-center space-x-2 opacity-60 grayscale hover:grayscale-0 transition-all">
           <span className={`text-xs font-medium ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Powered by</span>
           <span className={`text-sm font-bold ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>Google</span>
