@@ -117,28 +117,30 @@ npm run build
 npm run lint
 ```
 
-## 🔒 Security & Backend Proxy (Recommended)
+## 🔒 Security & Backend Proxy (Recommended for Production)
  
- **Do not use your API Key directly in the frontend (`apiKey` prop) on production websites.** This exposes your key to the public, allowing potential abuse of your quota.
+ **Do not use your API Key directly in the frontend (`apiKey` prop) on public websites.** This exposes your key, allowing potential abuse of your quota.
  
  ### The Secure "Clean" Solution
  
- Instead, use a backend script (e.g., PHP) to fetch and cache the data. This hides your key and reduces costs by caching responses.
+ Use the provided PHP proxy script to fetch and cache data server-side.
  
  #### 1. Deploy the Proxy Script
- We provide a ready-to-use PHP script for standard web hosting (e.g., World4You, All-Inkl):
- 
  1.  Copy `examples/proxy/google-places-proxy.php` to your web server (e.g., `https://your-website.com/api/reviews.php`).
- 2.  Edit the file to set your `GOOGLE_API_KEY` and `DEFAULT_PLACE_ID`.
- 3.  Ensure the script can write to a `cache/` directory.
+ 2.  **IMPORTANT:** Edit the file and set your `GOOGLE_API_KEY`.
+ 3.  **OPTIONAL:** Update `$ALLOWED_ORIGINS` in the PHP file to restrict access to your domain only.
+ 4.  Ensure the script can write to a `cache/` directory (chmod 755 or 777).
  
  #### 2. Configure the Widget
+ 
+ Pass the `proxyUrl` prop. The widget will automatically append `?placeId=...` to your proxy URL.
  
  ```tsx
  <GoogleReviews
    config={{
      // No apiKey needed here!
-     proxyUrl: "https://your-website.com/api/reviews.php"
+     proxyUrl: "https://your-website.com/api/reviews.php",
+     placeId: "ChIJ..." // Still required to know WHICH place to fetch
    }}
    // ... other props
  />
