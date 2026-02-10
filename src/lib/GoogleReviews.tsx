@@ -24,8 +24,13 @@ export const GoogleReviews: React.FC<GoogleReviewsProps> = ({
         let fetchedReviews: Review[] = [];
 
         if (config.proxyUrl) {
-          // Mode 1: Fetch from internal proxy (Clean Solution)
-          const response = await fetch(config.proxyUrl);
+          // Mode 1: Fetch from backend proxy (Recommended for production)
+          // The proxy holds the API key server-side - never exposed to the browser.
+          const proxyUrlObj = new URL(config.proxyUrl, window.location.origin);
+          if (config.placeId) {
+            proxyUrlObj.searchParams.set('placeId', config.placeId);
+          }
+          const response = await fetch(proxyUrlObj.toString());
           if (!response.ok) throw new Error('Failed to fetch from proxy');
           const data = await response.json();
           fetchedReviews = data.reviews || [];
