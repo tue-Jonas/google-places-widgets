@@ -1,6 +1,7 @@
 {
   "name": "@tue-jonas/google-places-widgets",
   "version": "1.0.1",
+  "license": "MIT",
   "type": "module",
   "main": "./dist/google-places-widgets.umd.js",
   "module": "./dist/google-places-widgets.es.js",
